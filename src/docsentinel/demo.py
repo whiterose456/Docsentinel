@@ -1,0 +1,36 @@
+"""Small deterministic demo fixture; no model/API key required."""
+from .verifier import verify_payload
+
+
+def run_demo() -> dict:
+    payload = {
+        "question": "When does the agreement terminate?",
+        "chunks": [
+            {
+                "chunk_id": "contract::p4::c1",
+                "text": "The agreement shall terminate on 31 December 2027 unless renewed in writing.",
+            },
+            {
+                "chunk_id": "contract::p7::c2",
+                "text": "Any renewal must be agreed by both parties in a signed written instrument.",
+            },
+        ],
+        "claims": [
+            {
+                "text": "The agreement terminates on 31 December 2027.",
+                "chunk_id": "contract::p4::c1",
+                "quote": "The agreement shall terminate on 31 December 2027",
+            },
+            {
+                "text": "Renewal requires a signed written agreement.",
+                "chunk_id": "contract::p4::c1",
+                "quote": "Any renewal must be agreed by both parties in a signed written instrument.",
+            },
+            {
+                "text": "The agreement has an automatic 90-day extension.",
+                "chunk_id": "contract::p4::c1",
+                "quote": "The agreement automatically extends for 90 days",
+            },
+        ],
+    }
+    return verify_payload(payload)
